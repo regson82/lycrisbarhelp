@@ -4,7 +4,6 @@
 //
 //  Created by Reg R. on 17/7/25.
 //
-
 // PopoverView.swift
 // The UI for the main popover window.
 
@@ -56,7 +55,8 @@ struct PopoverView: View {
                             }) {
                                 Text(line)
                                     .fontWeight(index == appState.currentLyricLine ? .bold : .regular)
-                                    .foregroundColor(index == appState.currentLyricLine ? appState.lyricColor : .primary)
+                                    // Use a fixed color for the popover for consistency.
+                                    .foregroundColor(index == appState.currentLyricLine ? .accentColor : .primary)
                                     .multilineTextAlignment(.leading)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }

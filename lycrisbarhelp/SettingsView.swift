@@ -46,21 +46,13 @@ struct SettingsView: View {
                 Divider()
                 
                 HStack {
-                    Image(systemName: "paintpalette")
-                        .font(.title2)
-                        .frame(width: 30)
-                    ColorPicker("Lyric Text Color", selection: $appState.lyricColor)
-                }
-                
-                HStack {
-                    Image(systemName: "sun.max")
+                    Image(systemName: "sparkles")
                         .font(.title2)
                         .frame(width: 30)
                     VStack(alignment: .leading) {
-                        // Renamed to be more accurate.
-                        Text("Text Opacity")
-                        Slider(value: $appState.glassTextOpacity, in: 0.1...1.0)
-                        Text("Adjust for better readability on different backgrounds.")
+                        Text("Highlight Intensity")
+                        Slider(value: $appState.glassHighlightIntensity, in: 0.0...1.0)
+                        Text("Adjust the 'shininess' of the glass text effect.")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -91,10 +83,10 @@ struct SettingsView: View {
                 
                 Toggle(isOn: $appState.useAutomaticScrolling) {
                     HStack {
-                        Image(systemName: "forward.end.alt")
+                        Image(systemName: "music.note.tv")
                             .font(.title2)
                             .frame(width: 30)
-                        Text("Automatic Scrolling")
+                        Text("Sync with Song Progress")
                     }
                 }
                 .toggleStyle(.switch)
@@ -104,7 +96,7 @@ struct SettingsView: View {
                         .font(.title2)
                         .frame(width: 30)
                     VStack(alignment: .leading) {
-                        Text("Scroll Speed")
+                        Text("Manual Scroll Speed")
                         Slider(value: $appState.lyricCycleDelay, in: 1.0...10.0, step: 0.5)
                             .onChange(of: appState.lyricCycleDelay) { _ in
                                 appState.restartLyricTimer()
@@ -114,12 +106,12 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                .disabled(!appState.useAutomaticScrolling)
+                .disabled(appState.useAutomaticScrolling) // Disable if auto-sync is on.
             }
             
             Spacer()
         }
         .padding(30)
-        .frame(width: 400, height: 550)
+        .frame(width: 400, height: 500)
     }
 }

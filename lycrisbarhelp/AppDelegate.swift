@@ -87,6 +87,7 @@ struct FloatingLyricsView: View {
     private func lyricTextView(_ text: String) -> some View {
         Text(text)
             .font(.system(size: 36, weight: .bold, design: .rounded))
+            .foregroundColor(.white) // Base color is always white for the glass effect.
     }
     
     var body: some View {
@@ -96,22 +97,26 @@ struct FloatingLyricsView: View {
                 
                 // ZStack to layer effects for the glass style, inspired by the example image.
                 ZStack {
-                    // Layer 1: Dark, blurred shadow for depth (offset down-right).
+                    // Layer 1: The main text fill, which is semi-transparent.
                     lyricTextView(lyricLine)
-                        .foregroundColor(.black.opacity(0.5))
-                        .blur(radius: 1)
-                        .offset(x: 1, y: 1)
+                        .opacity(0.6)
 
-                    // Layer 2: Light, blurred highlight for the top-left edge.
+                    // Layer 2: The top-left highlight, giving the "glass edge" effect.
                     lyricTextView(lyricLine)
-                        .foregroundColor(.white.opacity(0.8))
-                        .blur(radius: 1)
+                        .blendMode(.overlay)
+                        .blur(radius: 0.5)
                         .offset(x: -1, y: -1)
+                        .opacity(appState.glassHighlightIntensity) // Controlled by the slider.
                     
-                    // Layer 3: The main text fill, with opacity controlled by the slider.
+                    // Layer 3: A subtle dark shadow for the bottom-right edge.
                     lyricTextView(lyricLine)
-                        .foregroundColor(appState.lyricColor.opacity(appState.glassTextOpacity))
+                        .foregroundColor(.black)
+                        .blendMode(.multiply)
+                        .blur(radius: 0.5)
+                        .offset(x: 1, y: 1)
+                        .opacity(0.4)
                 }
+                .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 5) // Outer shadow for readability.
                 .id(lyricLine)
                 .transition(transition)
             } else {

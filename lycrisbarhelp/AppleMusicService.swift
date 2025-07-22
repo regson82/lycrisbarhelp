@@ -1,23 +1,24 @@
 //
-//  SpotifyService.swift
+//  AppleMusicService.swift
 //  lycrisbarhelp
 //
-//  Created by Reg R. on 17/7/25.
+//  Created by Reg R. on 22/7/25.
 //
-// SpotifyService.swift
-// Handles communication with the Spotify desktop app via AppleScript.
+
+// AppleMusicService.swift
+// Handles communication with the Apple Music desktop app via AppleScript.
 
 import Foundation
 
-class SpotifyService {
+class AppleMusicService {
     // Updated script to get track name, artist, duration, and current position.
     private let scriptSource = """
-    if application "Spotify" is running then
-        tell application "Spotify"
+    if application "Music" is running then
+        tell application "Music"
             if player state is playing then
                 set trackName to name of current track
                 set artistName to artist of current track
-                set trackDuration to duration of current track / 1000.0
+                set trackDuration to duration of current track
                 set playerPosition to player position
                 return trackName & "|||" & artistName & "|||" & trackDuration & "|||" & playerPosition
             else

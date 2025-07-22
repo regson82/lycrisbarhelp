@@ -18,17 +18,20 @@ struct LyricsBarApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        // This creates the icon in the macOS menu bar.
-        MenuBarExtra("LyricsBar", systemImage: "music.note") {
-            // The view that appears when the user clicks the menu bar icon.
+        // The MenuBarExtra now uses a Text label to display the current lyric.
+        MenuBarExtra {
+            // The popover view is still the content when clicked.
             PopoverView()
-                .environmentObject(appState) // Pass the shared state to the view.
+                .environmentObject(appState)
                 .onAppear {
-                    // When the popover appears, link the appState to the delegate.
                     appDelegate.appState = appState
                 }
+        } label: {
+            // This label automatically updates when appState.menuBarLyric changes.
+            Text(appState.menuBarLyric)
+                .font(.system(size: 14))
         }
-        .menuBarExtraStyle(.window) // Use a modern popover-style window.
+        .menuBarExtraStyle(.window)
 
         // This is a hidden window used only for the settings panel.
         Settings {

@@ -7,11 +7,6 @@
 
 // LaunchAtLogin.swift
 // Helper to manage launching the app when the user logs in.
-// LaunchAtLogin.swift
-// Helper to manage launching the app when the user logs in.
-// Safely handles different macOS versions.
-// LaunchAtLogin.swift
-// Helper to manage launching the app when the user logs in.
 // Temporarily a placeholder to resolve build issues.
 
 import Foundation
@@ -27,4 +22,3 @@ struct LaunchAtLogin {
         }
     }
 }
-
